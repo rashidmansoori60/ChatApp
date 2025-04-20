@@ -19,7 +19,7 @@
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/reimg"
-        android:background="@drawable/senderback"
+        android:background="@drawable/recback"
         android:layout_marginEnd="5dp">
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +31,8 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/senderimg"
             android:layout_marginEnd="5dp"
-            android:textSize="15sp"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
 
             />
         <TextView

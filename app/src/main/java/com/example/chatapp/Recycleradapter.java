@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,8 +34,10 @@ public class Recycleradapter extends FirebaseRecyclerAdapter<User, Recycleradapt
      * {@link FirebaseRecyclerOptions} for configuration options.
      *
      * @param options
+     *
      */
     Context context;
+    Long s;
     public Recycleradapter(@NonNull FirebaseRecyclerOptions<User> options, Context context) {
         super(options);
         this.context=context;
@@ -93,7 +96,7 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
                                     for(DataSnapshot snapshot1:snapshot.getChildren()){
 
                                         holder.userstatus.setText(snapshot1.child("msg").getValue().toString());
-
+                                        s= (Long) snapshot1.child("date").getValue();
                                     }
 
                                 }else{
@@ -105,9 +108,12 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
                             public void onCancelled(@NonNull DatabaseError error) {
 
                             }
+
                         });
 
+
         Picasso.get().load(model.getImageurl()).into(holder.circleImageView);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,5 +148,9 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
             userstatus=itemView.findViewById(R.id.userstatus);
 
         }
+    }
+    private String formatTimestamp(long s) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        return sdf.format(new Date(s));
     }
 }
