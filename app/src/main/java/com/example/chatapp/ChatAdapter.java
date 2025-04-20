@@ -21,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,13 +59,20 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Message message = arr.get(position);
         if (holder.getClass() == SenderViewHolder.class) {
-            SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
+            String datetime= simpleDateFormat.format(new Date(message.getDate()));
 
-            senderViewHolder.sendertxt.setText(message.getMsg());
+                    SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
+                    senderViewHolder.times.setText(datetime);
+
+                    senderViewHolder.sendertxt.setText(message.getMsg());
             Picasso.get().load(senderimage).into(senderViewHolder.senderprofile);
         } else {
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm");
+            String sdatetime= simpleDateFormat.format(new Date(message.getDate()));
             RecieverViewHolder recieverViewHolder = (RecieverViewHolder) holder;
             recieverViewHolder.recievertxt.setText(message.getMsg());
+            recieverViewHolder.time.setText(sdatetime);
             Picasso.get().load(revieverimage).into(recieverViewHolder.recieveprofile);
         }
 
@@ -115,23 +124,26 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     class RecieverViewHolder extends RecyclerView.ViewHolder {
         CircleImageView recieveprofile;
-        TextView recievertxt;
+        TextView recievertxt,time;
+
 
         public RecieverViewHolder(@NonNull View itemView) {
             super(itemView);
             recieveprofile = itemView.findViewById(R.id.reimg);
             recievertxt = itemView.findViewById(R.id.retxt);
+            time=itemView.findViewById(R.id.rectimemsgid);
         }
     }
     class SenderViewHolder extends RecyclerView.ViewHolder {
         CircleImageView senderprofile;
-        TextView sendertxt;
+        TextView sendertxt,times;
 
         public SenderViewHolder(@NonNull View itemView) {
 
             super(itemView);
             senderprofile = itemView.findViewById(R.id.senderimg);
             sendertxt = itemView.findViewById(R.id.sendertxt);
+            times=itemView.findViewById(R.id.sendtimemsgid);
         }
     }
 

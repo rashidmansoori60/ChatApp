@@ -13,21 +13,37 @@
         android:layout_margin="3dp"
         android:layout_alignParentStart="true"
         />
-
-    <TextView
-
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-android:textStyle="bold"
-        android:id="@+id/retxt"
-        android:text="Rashid khan"
-        android:textColor="@color/white"
-        android:padding="5dp"
-        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:layout_toRightOf="@+id/reimg"
-        android:layout_marginLeft="5dp"
-        android:textSize="20sp"
         android:background="@drawable/senderback"
-        />
+        android:layout_marginEnd="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retxt"
+            android:textStyle="bold"
+            android:text="Rashid khan"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/senderimg"
+            android:layout_marginEnd="5dp"
+            android:textSize="15sp"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="7dp"
+            android:id="@+id/rectimemsgid"
+            android:textColor="@color/white"
+            android:textSize="6sp"
+            android:layout_marginBottom="3dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="5dp"
+            android:text="10:00 pm"/>
+    </LinearLayout>
 
 </RelativeLayout>

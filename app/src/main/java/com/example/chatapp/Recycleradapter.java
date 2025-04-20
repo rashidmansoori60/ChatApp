@@ -16,7 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -77,7 +84,29 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
             }
         });
         holder.username.setText(model.getName());
-        holder.userstatus.setText(model.getStatus());
+        FirebaseDatabase.getInstance().getReference().child("Chat").child(FirebaseAuth.getInstance().getUid()+model.getUniqid())
+                        .child("Message").orderByChild("date").limitToLast(1)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.hasChildren()){
+                                    for(DataSnapshot snapshot1:snapshot.getChildren()){
+
+                                        holder.userstatus.setText(snapshot1.child("msg").getValue().toString());
+
+                                    }
+
+                                }else{
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
         Picasso.get().load(model.getImageurl()).into(holder.circleImageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +140,7 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
             circleImageView=itemView.findViewById(R.id.profile_image);
             username=itemView.findViewById(R.id.username);
             userstatus=itemView.findViewById(R.id.userstatus);
+
         }
     }
 }
