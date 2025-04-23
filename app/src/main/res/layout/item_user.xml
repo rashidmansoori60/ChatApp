@@ -36,6 +36,15 @@
             android:id="@+id/userstatus"
             android:textSize="15sp"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timestemp"
+            android:textSize="6sp"
+            android:gravity="end"
+            android:layout_marginEnd="5dp"
+            android:textStyle="bold"
+            />
 
 
     </LinearLayout>

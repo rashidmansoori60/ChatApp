@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 
 import androidx.activity.EdgeToEdge;
@@ -55,10 +56,12 @@ public class Home extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         circleImageView=findViewById(R.id.homeimggg);
         frameLayout=findViewById(R.id.framelayout);
         bottomNavigationView=findViewById(R.id.bottomnavigation);
         rep(new HomeFragment());
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -120,5 +123,6 @@ public class Home extends AppCompatActivity {
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.framelayout,fragment);
         fragmentTransaction.commit();
+
     }
 }

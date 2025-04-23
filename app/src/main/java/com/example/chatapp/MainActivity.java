@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ EditText name,email,pass,conpass;
 Button singupBtn;
 TextView ifsignin;
 FirebaseAuth auth;
+ProgressBar progressBar;
 String status="hey there i am using this app";
 String imageuri="https://media-hosting.imagekit.io/c3b98c5848464364/rashid.jpg?Expires=1838488608&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=uzwfEF6DY3nam1JiBFWNwG~CSqIeDGQDO7FAYbxZC0dC2PWzex18wdrS0JVu9GnviL7GfuGYwiaucsfxhUUf-sX85BZpwQ9rKOtchxFyr7iw4x2BKtffMZDrzBqMnvWLXIpFPSCPxjk0hIea0pPhfAW2MMTXI3AUy5~-liFne1O3Vh3YODv1vAoTXC8ym05fE6a8Ac5ZkpW6V-DweHWhQnBvgFIq2jXFcpniC4yLNx0pCUdAeAWAI~2gDR5JdxqeMJ8f~nIzFMxObIFRSfEpygw16g-jzrU1BER16DwIIwtoECrKVg5VzSesr5lfcJhTU5R2aPFCcdeEoQp2QxEPzA__";
 FirebaseDatabase firebaseDatabase;
@@ -44,6 +46,7 @@ FirebaseDatabase firebaseDatabase;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        progressBar=findViewById(R.id.progressBar);
         auth=FirebaseAuth.getInstance();
         firebaseDatabase=FirebaseDatabase.getInstance();
         name=findViewById(R.id.ragistername);
@@ -60,9 +63,11 @@ FirebaseDatabase firebaseDatabase;
         }
 
         singupBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
-           
+
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 String email_s=email.getText().toString();
                 String pass_s=pass.getText().toString();
                 String name_s=name.getText().toString();
@@ -95,6 +100,7 @@ FirebaseDatabase firebaseDatabase;
                                              @Override
                                              public void onComplete(@NonNull Task<Void> task) {
                                                  if(task.isSuccessful()){
+                                                     progressBar.setVisibility(View.GONE);
                                                      Intent intent=new Intent(MainActivity.this,Login.class);
                                                      startActivity(intent);
                                                      Toast.makeText(MainActivity.this, "User Created", Toast.LENGTH_SHORT).show();
@@ -108,6 +114,7 @@ FirebaseDatabase firebaseDatabase;
 
                              }
                              else {
+                                 progressBar.setVisibility(View.GONE);
                                  Toast.makeText(MainActivity.this, "Error to creation", Toast.LENGTH_SHORT).show();
                              }
                          }

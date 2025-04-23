@@ -1,7 +1,7 @@
 package com.example.chatapp;
 
 public class User {
-    String name,email,imageurl,uniqid,pass,status;
+    String name,email,imageurl,uniqid,pass,status,lastmsg;
 
     public String getStatus() {
         return status;
@@ -10,6 +10,7 @@ public class User {
     public void setStatus(String status) {
         this.status = status;
     }
+
 
     public User(String name, String email, String imageurl, String uniqid, String pass, String status) {
         this.name = name;

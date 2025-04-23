@@ -1,6 +1,7 @@
 package com.example.chatapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,10 +10,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -56,18 +57,28 @@ String recieverroom;
 ArrayList<Message> arr;
 public static String revieverimage;
 public static String senderimage;
+ImageView backinfo;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chat);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        backinfo=findViewById(R.id.backinfo);
+        backinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              Intent intent=new Intent(Chat.this, Home.class);
+              intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -100,10 +111,7 @@ recyclerView.scrollToPosition(arr.size() - 1);
 
 
 setSupportActionBar(toolbar);
-if(getSupportActionBar()!=null) {
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(true);
-}
+
       toolbartxt.setText(name);
         Picasso.get().load(revieverimage).into(toolbarimg);
         senderroom=senderuid+recieveruid;
@@ -184,12 +192,13 @@ databaseReference.addValueEventListener(new ValueEventListener() {
     }
 
 
-
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(Chat.this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+
     }
 }

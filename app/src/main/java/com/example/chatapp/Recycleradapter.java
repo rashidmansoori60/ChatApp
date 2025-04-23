@@ -45,6 +45,7 @@ public class Recycleradapter extends FirebaseRecyclerAdapter<User, Recycleradapt
 
     @Override
     protected void onBindViewHolder(@NonNull Viewholder holder, int position, @NonNull User model) {
+
         if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(model.getUniqid())){
             holder.itemView.setVisibility(View.GONE);
             ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
@@ -96,10 +97,9 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
                                     for(DataSnapshot snapshot1:snapshot.getChildren()){
 
                                         holder.userstatus.setText(snapshot1.child("msg").getValue().toString());
-                                        s= (Long) snapshot1.child("date").getValue();
-                                    }
+                                        holder.timestemp.setText(formatTimestamp((Long) snapshot1.child("date").getValue()));
 
-                                }else{
+                                    }
 
                                 }
                             }
@@ -139,13 +139,14 @@ imagedialog.setOnClickListener(new View.OnClickListener() {
     class Viewholder extends RecyclerView.ViewHolder {
 
         CircleImageView circleImageView;
-        TextView username,userstatus;
+        TextView username,userstatus,timestemp;
         public Viewholder(@NonNull View itemView) {
             super(itemView);
 
             circleImageView=itemView.findViewById(R.id.profile_image);
             username=itemView.findViewById(R.id.username);
             userstatus=itemView.findViewById(R.id.userstatus);
+            timestemp=itemView.findViewById(R.id.timestemp);
 
         }
     }

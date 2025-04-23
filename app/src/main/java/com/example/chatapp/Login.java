@@ -7,6 +7,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class Login extends AppCompatActivity {
     Button signinbtn;
     TextView ifsignup;
     FirebaseAuth auth;
+    ProgressBar progressBar;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,6 +41,7 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        progressBar=findViewById(R.id.progressBarlogin);
         auth=FirebaseAuth.getInstance();
 
         email=findViewById(R.id.loginemail);
@@ -50,6 +53,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 String email_s=email.getText().toString();
                 String pass_s=pass.getText().toString();
 
@@ -57,12 +61,14 @@ public class Login extends AppCompatActivity {
                      @Override
                      public void onComplete(@NonNull Task<AuthResult> task) {
                          if(task.isSuccessful()){
+                             progressBar.setVisibility(View.GONE);
                              Intent intent=new Intent(Login.this,Home.class);
 
                              startActivity(intent);
 
                          }
                          else {
+                             progressBar.setVisibility(View.GONE);
                              email.setError("invalid");
                              pass.setError("invalid");
                              Toast.makeText(Login.this, "Invalid data", Toast.LENGTH_SHORT).show();
